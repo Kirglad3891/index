@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuvoria | Профиль креатора</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet>
+    <style>
+        :root {
+            --bg: #0f0b1a;
+            --card: #1a1529;
+            --purple: #7b2cbf;
+            --pink: #ff4d8d;
+            --text: #e0d6ff;
+            --border: #2a2440;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Шапка */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo::before {
+            content: "🔒";
+        }
+        
+        .wallet-btn {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .wallet-btn:hover {
+            background: #6a1fb9;
+        }
+        
+        /* Основной контент */
+        .creator-profile {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        /* Боковая информация о креаторе */
+        .creator-info {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .creator-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .creator-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--purple), var(--pink));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .creator-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .creator-bio {
+            font-size: 14px;
+            color: #b8b2d4;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .subscription-status {
+            background: rgba(123, 44, 191, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .subscription-status .tier {
+            font-weight: 600;
+            color: var(--pink);
+            margin-bottom: 5px;
+        }
+        
+        .subscription-status .date {
+            font-size: 12px;
+            color: #b8b2d4;
+        }
+        
+        .creator-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .creator-stat {
+            text-align: center;
+background: rgba(31, 25, 55, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .creator-stat .value {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .creator-stat .label {
+            font-size: 12px;
+            color: #b8b2d4;
+        }
+        
+        /* Контентная область */
+        .creator-content {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        .content-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+        
+        .content-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .content-tab:hover, .content-tab.active {
+            color: var(--pink);
+            border-bottom: 2px solid var(--pink);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: var(--pink);
+            border-radius: 3px;
+        }
+        
+        /* Контент */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .content-card {
+            background: rgba(31, 25, 55, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .content-thumbnail {
+            height: 150px;
+            background: linear-gradient(45deg, #1a1529, #3a3450);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-thumbnail::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(123,44,191,0.3), rgba(255,77,141,0.3));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .content-card:hover .content-thumbnail::after {
+            opacity: 1;
+        }
+        
+        .content-lock {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .content-info {
+            padding: 15px;
+        }
+        
+        .content-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .content-description {
+            font-size: 13px;
+            color: #b8b2d4;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #b8b2d4;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            .creator-profile {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">NUVORIA</div>
+            <button class="wallet-btn">
+                <span>🦊</span>
+                0x1a2...3b4c
+            </button>
+        </header>
+        
+        <div class="creator-profile">
+            <div class="creator-info">
+                <div class="creator-header">
+                    <div class="creator-avatar">M</div>
+                    <div class="creator-name">Мария Художница</div>
+                    <div class="creator-bio">
+                        Цифровой художник, создаю NFT-коллекции и обучающие материалы. 
+                        Люблю экспериментировать с стилями.
+                    </div>
+                </div>
+                
+                <div class="subscription-status">
+                    <div class="tier">🔐 Премиум подписка</div>
+                    <div class="date">Активна до 15.07.2023</div>
+                </div>
+                
+                <div class="creator-stats">
+                    <div class="creator-stat">
+                        <div class="value">248</div>
+                        <div class="label">Подписчиков</div>
+                    </div>
+                    <div class="creator-stat">
+                        <div class="value">156</div>
+                        <div class="label">Публикаций</div>
+                    </div>
+                    <div class="creator-stat">
+                        <div class="value">37</div>
+                        <div class="label">NFT</div>
+                    </div>
+                    <div class="creator-stat">
+                        <div class="value">4.8★</div>
+                        <div class="label">Рейтинг</div>
+                    </div>
+                </div>
+                
+                <button class="wallet-btn" style="width: 100%; justify-content: center; margin-top: 20px;">
+                    <span>🔧</span> Управление подпиской
+                </button>
+            </div>
+            
+            <div class="creator-content">
+                <div class="content-tabs">
+                    <div class="content-tab active" data-tab="all">Все публикации</div>
+                    <div class="content-tab" data-tab="photos">Фото</div>
+                    <div class="content-tab" data-tab="videos">Видео</div>
+                    <div class="content-tab" data-tab="audio">Аудио</div>
+                    <div class="content-tab" data-tab="archive">Архив</div>
+                </div>
+                
+                <!-- Все публикации -->
+                <div class="tab-content active" id="all">
+                    <h2 class="section-title">Все публикации</h2>
+                    
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🎨
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Новая NFT-коллекция</div>
+                                <div class="content-description">
+                                    Моя последняя работа в стиле сюрреализма. Ограниченный выпуск из 50 экземпляров.
+                                </div>
+                                <div class="content-meta">
+                                    <span>3 дня назад</span>
+                                    <span>👁️ 1.2K</span>
+                                </div>
+                            </div>
+                        </div>
+<div class="content-card">
+                            <div class="content-thumbnail">
+                                🎥
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Стрим Q&A</div>
+                                <div class="content-description">
+                                    Отвечаю на ваши вопросы о цифровом искусстве и NFT. Запись доступна всем подписчикам.
+                                </div>
+                                <div class="content-meta">
+                                    <span>1 неделя назад</span>
+                                    <span>👁️ 3.4K</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                📸
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Эксклюзивные фото</div>
+                                <div class="content-description">
+                                    Бэкстейдж с последней фотосессии. Только для подписчиков премиум уровня.
+                                </div>
+                                <div class="content-meta">
+                                    <span>2 недели назад</span>
+                                    <span>👁️ 542</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🎵
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Фоновая музыка</div>
+                                <div class="content-description">
+                                    Подборка треков, которые я слушаю во время работы. Премиум контент.
+                                </div>
+                                <div class="content-meta">
+                                    <span>3 недели назад</span>
+                                    <span>👁️ 876</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                📝
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Советы по рисованию</div>
+                                <div class="content-description">
+                                    Пять техник, которые помогут улучшить ваши цифровые рисунки. Бесплатно для всех.
+                                </div>
+                                <div class="content-meta">
+                                    <span>1 месяц назад</span>
+                                    <span>👁️ 5.1K</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🖌️
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Таймлапс рисунка</div>
+                                <div class="content-description">
+                                    Полный процесс создания работы "Космический сон". Только для VIP подписчиков.
+</div>
+                                <div class="content-meta">
+                                    <span>1 месяц назад</span>
+                                    <span>👁️ 324</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Фото -->
+                <div class="tab-content" id="photos">
+                    <h2 class="section-title">Фотогалерея</h2>
+                    
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                📸
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Эксклюзивные фото #1</div>
+                                <div class="content-meta">
+                                    <span>2 недели назад</span>
+                                    <span>👁️ 542</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                📸
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Галерея работ 2023</div>
+                                <div class="content-meta">
+                                    <span>3 недели назад</span>
+                                    <span>👁️ 1.3K</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                📸
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Закулисье выставки</div>
+                                <div class="content-meta">
+                                    <span>1 месяц назад</span>
+                                    <span>👁️ 287</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Видео -->
+                <div class="tab-content" id="videos">
+                    <h2 class="section-title">Видео</h2>
+                    
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🎥
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Стрим Q&A</div>
+                                <div class="content-meta">
+                                    <span>1 неделя назад</span>
+                                    <span>👁️ 3.4K</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🎥
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Таймлапс рисунка</div>
+                                <div class="content-meta">
+                                    <span>1 месяц назад</span>
+                                    <span>👁️ 324</span>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Аудио -->
+                <div class="tab-content" id="audio">
+                    <h2 class="section-title">Аудио</h2>
+                    
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🎵
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Фоновая музыка</div>
+                                <div class="content-meta">
+                                    <span>3 недели назад</span>
+                                    <span>👁️ 876</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Архив -->
+                <div class="tab-content" id="archive">
+                    <h2 class="section-title">Архив</h2>
+                    
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🗄️
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Ранние работы 2020</div>
+                                <div class="content-meta">
+                                    <span>6 месяцев назад</span>
+                                    <span>👁️ 112</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <div class="content-thumbnail">
+                                🗄️
+                                <div class="content-lock">🔒</div>
+                            </div>
+                            <div class="content-info">
+                                <div class="content-title">Эксперименты с AI</div>
+                                <div class="content-meta">
+                                    <span>8 месяцев назад</span>
+                                    <span>👁️ 98</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Переключение вкладок
+        const contentTabs = document.querySelectorAll('.content-tab');
+        const contentTabContents = document.querySelectorAll('.tab-content');
+        
+        contentTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Удаляем активный класс у всех вкладок
+                contentTabs.forEach(t => t.classList.remove('active'));
+                contentTabContents.forEach(c => c.classList.remove('active'));
+                
+                // Добавляем активный класс к текущей вкладке
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Имитация клика по заблокированному контенту
+        document.querySelectorAll('.content-lock').forEach(lock => {
+            lock.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert('Этот контент доступен только для подписчиков VIP уровня. Хотите upgrade?');
+            });
+        });
+        
+        // Имитация клика по карточке контента
+        document.querySelectorAll('.content-card').forEach(card => {
+            card.
+addEventListener('click', () => {
+                const title = card.querySelector('.content-title').textContent;
+                alert(`Открываем: "${title}" (будет реализовано в полной версии)`);
+            });
+        });
+    </script>
+</body>
+</html>
