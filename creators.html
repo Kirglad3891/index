@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuvoria | Личный кабинет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0b1a;
+            --card: #1a1529;
+            --purple: #7b2cbf;
+            --pink: #ff4d8d;
+            --text: #e0d6ff;
+            --border: #2a2440;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Шапка */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo::before {
+            content: "🔒";
+        }
+        
+        .mode-switcher {
+            background: var(--card);
+            border: none;
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .mode-switcher:hover {
+            background: var(--purple);
+        }
+        
+        /* Основной контент */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        /* Боковое меню */
+        .sidebar {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .user-card {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--purple), var(--pink));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .username {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .wallet-address {
+            font-family: monospace;
+            font-size: 12px;
+            color: #b8b2d4;
+            word-break: break-all;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 10px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(123, 44, 191, 0.2);
+            color: var(--pink);
+        }
+        
+        /* Контентная область */
+        .content {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: "";
+display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: var(--pink);
+            border-radius: 3px;
+        }
+        
+        /* Стили для подписчика */
+        .subscriptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .subscription-card {
+            background: rgba(123, 44, 191, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .subscription-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-3px);
+        }
+        
+        .sub-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--purple);
+            border-radius: 50%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .sub-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .sub-price {
+            color: var(--pink);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .cancel-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 15px;
+            border-radius: 6px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cancel-btn:hover {
+            background: rgba(255, 77, 141, 0.1);
+            border-color: var(--pink);
+        }
+        
+        /* Стили для креатора */
+        .creator-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(123, 44, 191, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--pink);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #b8b2d4;
+        }
+        
+        .content-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .content-item {
+            background: rgba(31, 25, 55, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .content-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .content-thumbnail {
+            height: 150px;
+            background: linear-gradient(45deg, #1a1529, #3a3450);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        .content-info {
+            padding: 15px;
+        }
+        
+        .content-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #b8b2d4;
+        }
+        
+        .new-content-btn {
+            background: var(--pink);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .new-content-btn:hover {
+            background: #e63d7a;
+            transform: translateY(-2px);
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .subscription-card, .content-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .creator-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .subscriptions-grid, .content-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">NUVORIA</div>
+            <button class="mode-switcher" id="modeSwitcher">
+                <span id="modeIcon">👑</span>
+                <span id="modeText">Режим креатора</span>
+            </button>
+        </header>
+        
+        <!-- Кабинет подписчика (по умолчанию) -->
+        <div class="dashboard" id="userDashboard">
+            <div class="sidebar">
+                <div class="user-card">
+                    <div class="avatar">U</div>
+                    <div class="username">Анонимный подписчик</div>
+                    <div class="wallet-address">0x1a2...3b4c</div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#" class="nav-link active">📋 Мои подписки</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">💳 Кошелёк</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">🔐 Безопасность</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">⚙️ Настройки</a></li>
+                </ul>
+            </div>
+            
+            <div class="content">
+                <h2 class="section-title">Мои подписки</h2>
+                
+                <div class="subscriptions-grid">
+                    <div class="subscription-card">
+                        <div class="sub-avatar">A</div>
+                        <div class="sub-name">NFT-Художник</div>
+                        <div class="sub-price">5 USDT/месяц</div>
+                        <button class="cancel-btn">Отменить подписку</button>
+                    </div>
+                    
+                    <div class="subscription-card">
+                        <div class="sub-avatar">B</div>
+                        <div class="sub-name">Web3 Dev</div>
+                        <div class="sub-price">10 USDT/месяц</div>
+                        <button class="cancel-btn">Отменить подписку</button>
+                    </div>
+                    
+                    <div class="subscription-card">
+                        <div class="sub-avatar">C</div>
+                        <div class="sub-name">Эксклюзив 18+</div>
+                        <div class="sub-price">50 USDT/месяц</div>
+                        <button class="cancel-btn">Отменить подписку</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Кабинет креатора (скрыт по умолчанию) -->
+        <div class="dashboard" id="creatorDashboard" style="display: none;">
+            <div class="sidebar">
+                <div class="user-card">
+                    <div class="avatar">K</div>
+                    <div class="username">Анонимный креатор</div>
+                    <div class="wallet-address">0x5d6...7e8f</div>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#" class="nav-link active">📊 Статистика</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">🎞️ Мой контент</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">💰 Финансы</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">👥 Подписчики</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">⚙️ Настройки</a></li>
+                </ul>
+</div>
+            
+            <div class="content">
+                <h2 class="section-title">Обзор</h2>
+                
+                <div class="creator-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Подписчики</div>
+                        <div class="stat-value">248</div>
+                        <div class="stat-label">+12 за неделю</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Доход</div>
+                        <div class="stat-value">1.2Ξ</div>
+                        <div class="stat-label">~$4,000</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Контент</div>
+                        <div class="stat-value">37</div>
+                        <div class="stat-label">12 премиум</div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Последний контент</h2>
+                
+                <div class="content-list">
+                    <div class="content-item">
+                        <div class="content-thumbnail">🎨</div>
+                        <div class="content-info">
+                            <div class="content-title">Новая NFT-коллекция</div>
+                            <div class="content-meta">
+                                <span>🔒 Премиум</span>
+                                <span>3 дня назад</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-item">
+                        <div class="content-thumbnail">🎥</div>
+                        <div class="content-info">
+                            <div class="content-title">Стрим Q&A</div>
+                            <div class="content-meta">
+                                <span>🔓 Бесплатно</span>
+                                <span>1 неделя назад</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-item">
+                        <div class="content-thumbnail">📸</div>
+                        <div class="content-info">
+                            <div class="content-title">Эксклюзивные фото</div>
+                            <div class="content-meta">
+                                <span>🔒 VIP</span>
+                                <span>2 недели назад</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="new-content-btn">
+                    <span>+</span> Загрузить новый контент
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Переключение между кабинетами
+        const modeSwitcher = document.getElementById('modeSwitcher');
+        const userDashboard = document.getElementById('userDashboard');
+        const creatorDashboard = document.getElementById('creatorDashboard');
+        const modeIcon = document.getElementById('modeIcon');
+        const modeText = document.getElementById('modeText');
+        
+        let isCreatorMode = false;
+        
+        modeSwitcher.addEventListener('click', () => {
+            isCreatorMode = !isCreatorMode;
+            
+            if (isCreatorMode) {
+                userDashboard.style.display = 'none';
+                creatorDashboard.style.display = 'grid';
+                modeIcon.textContent = '👤';
+                modeText.textContent = 'Режим подписчика';
+            } else {
+                userDashboard.style.display = 'grid';
+                creatorDashboard.style.display = 'none';
+                modeIcon.textContent = '👑';
+                modeText.textContent = 'Режим креатора';
+            }
+        });
+        
+        // Имитация работы кнопок
+        document.querySelectorAll('.cancel-btn').
+forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Подписка будет отменена в следующем платежном цикле');
+            });
+        });
+        
+        document.querySelector('.new-content-btn').addEventListener('click', () => {
+            alert('Открывается окно загрузки нового контента');
+        });
+    </script>
+</body>
+</html>
